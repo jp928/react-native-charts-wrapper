@@ -10,6 +10,7 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.uimanager.SimpleViewManager;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.github.mikephil.charting.animation.Easing;
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -522,6 +523,9 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
     @ReactProp(name = "data")
     public void setData(T chart, ReadableMap propMap) {
         chart.setData(getDataExtract().extract(chart, propMap));
+        if (chart instanceof BarChart) {
+            chart.animateY(2000);
+        }
     }
 
     @ReactProp(name = "highlights")

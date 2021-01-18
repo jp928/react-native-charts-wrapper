@@ -3,6 +3,7 @@ package com.github.wuxudong.rncharts.charts;
 import com.facebook.react.uimanager.ThemedReactContext;
 import com.facebook.react.uimanager.annotations.ReactProp;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.wuxudong.rncharts.data.BarDataExtract;
 import com.github.wuxudong.rncharts.data.DataExtract;
@@ -21,6 +22,15 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
         BarChart barChart = new BarChart(reactContext);
         barChart.setOnChartValueSelectedListener(new RNOnChartValueSelectedListener(barChart));
         barChart.setOnChartGestureListener(new RNOnChartGestureListener(barChart));
+
+        RoundedBarChartRenderer roundedBarChartRenderer = new RoundedBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler(), 20);
+        barChart.setRenderer(roundedBarChartRenderer);
+
+        YAxis left = barChart.getAxisLeft();
+        left.setDrawGridLines(false);
+        left.setDrawAxisLine(true);
+        left.setAxisMinimum(0f);
+
         return barChart;
     }
 
@@ -42,5 +52,15 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
     @ReactProp(name = "highlightFullBarEnabled")
     public void setHighlightFullBarEnabled(BarChart chart, boolean enabled) {
         chart.setHighlightFullBarEnabled(enabled);
+    }
+
+    @ReactProp(name = "descriptionEnabled")
+    public void setDescriptionEnabled(BarChart chart, boolean enabled) {
+        chart.getDescription().setEnabled(enabled);
+    }
+
+    @ReactProp(name = "rightYAxisEnabled")
+    public void setRightYAxisnEnabled(BarChart chart, boolean enabled) {
+        chart.getAxisRight().setEnabled(enabled);
     }
 }
