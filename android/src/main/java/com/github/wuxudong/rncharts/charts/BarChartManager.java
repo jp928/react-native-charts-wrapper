@@ -60,7 +60,7 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
     }
 
     @ReactProp(name = "rightYAxisEnabled")
-    public void setRightYAxisnEnabled(BarChart chart, boolean enabled) {
+    public void setRightYAxisEnabled(BarChart chart, boolean enabled) {
         chart.getAxisRight().setEnabled(enabled);
     }
 }
