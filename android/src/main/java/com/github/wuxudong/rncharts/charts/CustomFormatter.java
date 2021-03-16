@@ -1,12 +1,7 @@
 package com.github.wuxudong.rncharts.charts;
 
-import com.github.mikephil.charting.components.AxisBase;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.formatter.IValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
-import com.github.mikephil.charting.utils.ViewPortHandler;
-
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 public class CustomFormatter extends ValueFormatter {
@@ -15,6 +10,7 @@ public class CustomFormatter extends ValueFormatter {
 
     public CustomFormatter(String value) {
         mFormat = new DecimalFormat(value);
+        mFormat.setRoundingMode(RoundingMode.DOWN);
     }
 
     @Override

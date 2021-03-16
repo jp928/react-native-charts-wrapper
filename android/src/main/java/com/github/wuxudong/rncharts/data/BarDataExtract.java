@@ -65,9 +65,11 @@ public class BarDataExtract extends DataExtract<BarData, BarEntry> {
     void dataSetConfig(Chart chart, IDataSet<BarEntry> dataSet, ReadableMap config) {
         BarDataSet barDataSet = (BarDataSet) dataSet;
 
+        barDataSet.setValueFormatter(new CustomFormatter("##.###"));
+
         ChartDataSetConfigUtils.commonConfig(chart, barDataSet, config);
         ChartDataSetConfigUtils.commonBarLineScatterCandleBubbleConfig(barDataSet, config);
-
+        
         if (BridgeUtils.validate(config, ReadableType.Number, "barShadowColor")) {
             barDataSet.setBarShadowColor(config.getInt("barShadowColor"));
         }
