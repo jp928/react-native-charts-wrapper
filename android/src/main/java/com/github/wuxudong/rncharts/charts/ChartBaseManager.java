@@ -27,6 +27,7 @@ import com.github.mikephil.charting.formatter.LargeValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.wuxudong.rncharts.data.DataExtract;
+import com.github.wuxudong.rncharts.markers.NectrMarkerView;
 import com.github.wuxudong.rncharts.markers.RNRectangleMarkerView;
 import com.github.wuxudong.rncharts.markers.RNCircleMarkerView;
 import com.github.wuxudong.rncharts.utils.BridgeUtils;
@@ -230,10 +231,10 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
             durationY = propMap.getInt("durationY");
         }
         if (BridgeUtils.validate(propMap, ReadableType.String, "easingX")) {
-             easingX = EasingFunctionHelper.getEasingFunction(propMap.getString("easingX"));
+            easingX = EasingFunctionHelper.getEasingFunction(propMap.getString("easingX"));
         }
         if (BridgeUtils.validate(propMap, ReadableType.String, "easingY")) {
-             easingY = EasingFunctionHelper.getEasingFunction(propMap.getString("easingY"));
+            easingY = EasingFunctionHelper.getEasingFunction(propMap.getString("easingY"));
         }
 
         if (durationX != null && durationY != null) {
@@ -281,6 +282,9 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
                 markerView = circleMarker(chart);
 
                 break;
+            case "nectr":
+                markerView = nectrMarker(chart,propMap);
+                break;
             default:
                 markerView = rectangleMarker(chart, propMap);
         }
@@ -295,11 +299,57 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
         return marker;
     }
 
+    private NectrMarkerView nectrMarker(Chart chart, ReadableMap propMap) {
+        NectrMarkerView marker = new NectrMarkerView(chart.getContext());
+        setNectrMarkerParams(marker, propMap);
+        return marker;
+    }
+
     private RNCircleMarkerView circleMarker(Chart chart) {
         return new RNCircleMarkerView(chart.getContext());
     }
 
     private void setMarkerParams(RNRectangleMarkerView marker, ReadableMap propMap) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
+                BridgeUtils.validate(propMap, ReadableType.Number, "markerColor")) {
+            marker.getTvContent()
+                    .setBackgroundTintList(
+                            ColorStateList.valueOf(propMap.getInt("markerColor"))
+                    );
+        }
+
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "digits")) {
+            marker.setDigits(propMap.getInt("digits"));
+        }
+
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "textColor")) {
+            marker.getTvContent().setTextColor(propMap.getInt("textColor"));
+        }
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "textSize")) {
+            marker.getTvContent().setTextSize(propMap.getInt("textSize"));
+        }
+
+        if (BridgeUtils.validate(propMap, ReadableType.String, "textAlign")) {
+
+            int alignment = View.TEXT_ALIGNMENT_CENTER;
+            switch (propMap.getString("textAlign")) {
+                case "left":
+                    alignment = View.TEXT_ALIGNMENT_TEXT_START;
+                    break;
+                case "center":
+                    alignment = View.TEXT_ALIGNMENT_CENTER;
+                    break;
+                case "right":
+                    alignment = View.TEXT_ALIGNMENT_TEXT_END;
+                    break;
+            }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+                marker.getTvContent().setTextAlignment(alignment);
+            }
+        }
+    }
+
+    private void setNectrMarkerParams(NectrMarkerView marker, ReadableMap propMap) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP &&
                 BridgeUtils.validate(propMap, ReadableType.Number, "markerColor")) {
             marker.getTvContent()
