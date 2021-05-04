@@ -573,8 +573,24 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
     @ReactProp(name = "data")
     public void setData(T chart, ReadableMap propMap) {
         chart.setData(getDataExtract().extract(chart, propMap));
-        if (chart instanceof BarChart) {
-            chart.animateY(2000);
+
+        Integer durationY = null;
+        Easing.EasingFunction easingY = Easing.Linear;
+
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "durationY")) {
+            durationY = propMap.getInt("durationY");
+        }
+
+        if (BridgeUtils.validate(propMap, ReadableType.String, "easingY")) {
+            easingY = EasingFunctionHelper.getEasingFunction(propMap.getString("easingY"));
+        }
+
+        if (chart instanceof BarChart && durationY != null) {
+            chart.animateY(durationY, easingY);
+        }
+
+        if (chart instanceof BarChart && durationY != null) {
+            chart.animateY(durationY, easingY);
         }
     }
 
