@@ -95,7 +95,7 @@ public class NectrMarkerView extends MarkerView {
             tvContent.setBackground(backgroundLeft);
             root.setBackground(backgroundLeftBg);
         } else {
-            offset2.x = - 288;
+            offset2.x = - 276;
             tvContent.setBackground(backgroundRight);
             root.setBackground(backgroundRightBg);
         }
