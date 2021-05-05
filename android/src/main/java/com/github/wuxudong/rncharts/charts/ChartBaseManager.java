@@ -265,9 +265,6 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
         if (BridgeUtils.validate(propMap, ReadableType.String, "position")) {
             axis.setPosition(XAxisPosition.valueOf(propMap.getString("position")));
         }
-
-        axis.setXOffset(20f);
-        axis.setLabelCount(9, true);
     }
 
     @ReactProp(name = "marker")
