@@ -12,6 +12,7 @@ import com.facebook.react.uimanager.annotations.ReactProp;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.Chart;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -265,6 +266,8 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
             axis.setPosition(XAxisPosition.valueOf(propMap.getString("position")));
         }
 
+        axis.setXOffset(20f);
+        axis.setLabelCount(9, true);
     }
 
     @ReactProp(name = "marker")
@@ -420,6 +423,12 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
         if (BridgeUtils.validate(propMap, ReadableType.Number, "yOffset")) {
             axis.setYOffset((float)(propMap.getDouble("yOffset")));
         }
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "xOffset")) {
+            axis.setXOffset((float)(propMap.getDouble("xOffset")));
+        }
+        if (BridgeUtils.validate(propMap, ReadableType.Number, "spaceMin")) {
+            axis.setSpaceMin((float)(propMap.getDouble("spaceMin")));
+        }
         if (BridgeUtils.validate(propMap, ReadableType.Number, "gridColor")) {
             axis.setGridColor(propMap.getInt("gridColor"));
         }
@@ -432,6 +441,7 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
         if (BridgeUtils.validate(propMap, ReadableType.Number, "axisLineWidth")) {
             axis.setAxisLineWidth((float) propMap.getDouble("axisLineWidth"));
         }
+
         if (BridgeUtils.validate(propMap, ReadableType.Map, "gridDashedLine")) {
             ReadableMap gridDashedLine = propMap.getMap("gridDashedLine");
             float lineLength = 0;
@@ -585,11 +595,7 @@ public abstract class ChartBaseManager<T extends Chart, U extends Entry> extends
             easingY = EasingFunctionHelper.getEasingFunction(propMap.getString("easingY"));
         }
 
-        if (chart instanceof BarChart && durationY != null) {
-            chart.animateY(durationY, easingY);
-        }
-
-        if (chart instanceof BarChart && durationY != null) {
+        if ((chart instanceof BarChart || chart instanceof LineChart) && durationY != null) {
             chart.animateY(durationY, easingY);
         }
     }
