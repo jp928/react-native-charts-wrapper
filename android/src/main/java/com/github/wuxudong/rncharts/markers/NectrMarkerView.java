@@ -43,14 +43,9 @@ public class NectrMarkerView extends MarkerView {
 
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        String text;
-
-        if (e instanceof CandleEntry) {
-            CandleEntry ce = (CandleEntry) e;
-            text = Utils.formatNumber(ce.getClose(), digits, false).replace(",", ".");
-        } else {
-            text = Utils.formatNumber(e.getY(), digits, false).replace(",", ".");;
-        }
+        String text = Utils.formatNumber(e.getY(), digits, false)
+                .replace(",", ".")
+                .concat(" kWh");
 
         if (e.getData() instanceof Map) {
             if (((Map) e.getData()).containsKey("marker")) {
