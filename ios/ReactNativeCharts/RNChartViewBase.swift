@@ -47,7 +47,7 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
 
         chart.data = dataExtract.extract(json)
 
-        chart.animate(yAxisDuration: 2000, easingOption: .linear)
+        chart.animate(yAxisDuration: 2.0, easingOption: .linear)
     }
 
     func setLegend(_ config: NSDictionary) {
@@ -461,7 +461,7 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
             chart.marker = marker
             marker.chartView = chart
         
-        case "circle":
+        case "nectr":
             let marker = NectrMarker(
                 color: RCTConvert.uiColor(json["markerColor"].intValue),
                 font: markerFont,
