@@ -23,7 +23,7 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
         barChart.setOnChartValueSelectedListener(new RNOnChartValueSelectedListener(barChart));
         barChart.setOnChartGestureListener(new RNOnChartGestureListener(barChart));
 
-        RoundedBarChartRenderer roundedBarChartRenderer = new RoundedBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler(), 20);
+        RoundedBarChartRenderer roundedBarChartRenderer = new RoundedBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler(), 0);
         barChart.setRenderer(roundedBarChartRenderer);
 
         YAxis left = barChart.getAxisLeft();
