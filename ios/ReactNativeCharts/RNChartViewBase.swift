@@ -46,6 +46,8 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
         let json = BridgeUtils.toJson(data)
 
         chart.data = dataExtract.extract(json)
+
+        chart.animate(yAxisDuration: 2000, easingOption: .linear)
     }
 
     func setLegend(_ config: NSDictionary) {
@@ -455,6 +457,16 @@ open class RNChartViewBase: UIView, ChartViewDelegate {
                     height: json["markerSize"].intValue
                 ),
                 strokeSize: json["markerStrokeSize"].intValue
+            )
+            chart.marker = marker
+            marker.chartView = chart
+        
+        case "circle":
+            let marker = NectrMarker(
+                color: RCTConvert.uiColor(json["markerColor"].intValue),
+                font: markerFont,
+                textColor: RCTConvert.uiColor(json["textColor"].intValue),
+                textAlign: RCTConvert.nsTextAlignment(json["textAlign"].stringValue)
             )
             chart.marker = marker
             marker.chartView = chart
