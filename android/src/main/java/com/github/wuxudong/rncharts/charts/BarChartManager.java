@@ -22,10 +22,6 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
         BarChart barChart = new BarChart(reactContext);
         barChart.setOnChartValueSelectedListener(new RNOnChartValueSelectedListener(barChart));
         barChart.setOnChartGestureListener(new RNOnChartGestureListener(barChart));
-
-        RoundedBarChartRenderer roundedBarChartRenderer = new RoundedBarChartRenderer(barChart, barChart.getAnimator(), barChart.getViewPortHandler(), 0);
-        barChart.setRenderer(roundedBarChartRenderer);
-
         YAxis left = barChart.getAxisLeft();
         left.setDrawGridLines(false);
         left.setDrawAxisLine(true);
@@ -37,6 +33,14 @@ public class BarChartManager extends BarLineChartBaseManager<BarChart, BarEntry>
     @Override
     DataExtract getDataExtract() {
         return new BarDataExtract();
+    }
+
+    @ReactProp(name = "barRadius")
+    public void setBoarderRadius(BarChart chart, Integer radius) {
+        if (radius != null) {
+            RoundedBarChartRenderer roundedBarChartRenderer = new RoundedBarChartRenderer(chart, chart.getAnimator(), chart.getViewPortHandler(), radius);
+            chart.setRenderer(roundedBarChartRenderer);
+        }
     }
 
     @ReactProp(name = "drawValueAboveBar")
