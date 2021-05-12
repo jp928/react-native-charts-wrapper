@@ -72,7 +72,7 @@ public class NectrMarkerView extends MarkerView {
 
     @Override
     public MPPointF getOffset() {
-        return new MPPointF(-getWidth(), -getHeight());
+        return new MPPointF(-getWidth() , -getHeight());
     }
 
     @Override
@@ -85,12 +85,14 @@ public class NectrMarkerView extends MarkerView {
         offset2.x = offset.x;
         offset2.y = offset.y + 24;
 
-        if (posX < 240) {
-            offset2.x = - 30;
+        float width = getWidth();
+
+        if (posX + offset.x < 0) {
+            offset2.x = -30;
             tvContent.setBackground(backgroundLeft);
             root.setBackground(backgroundLeftBg);
         } else {
-            offset2.x = - 364;
+            offset2.x = -width + 30;
             tvContent.setBackground(backgroundRight);
             root.setBackground(backgroundRightBg);
         }
